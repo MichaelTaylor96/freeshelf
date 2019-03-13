@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<div class="title_text">Freeshelf<div>
+{% endblock %}
+
+{% block content %}
+    <div class="content">
+        <form method="GET" action="{% url 'Index' %}">
+            {{ sort.as_p }}
+            <button type="submit">Sort</button>
+        </form>
+        <div class="books">
+            {% for book in books %}
+                <div class="item">
+                    {% if book.cover %}
+                        <img class="cover" src="{{ book.cover.url }}" alt="book cover">
+                    {% endif %}
+                    <div class="item_info">
+                        <div class="item_head">
+                            <h2 class="item_title">
+                                <a href="{{ book.url }}" target="blank">{{ book.title }}</a>
+                            </h2>
+                            <p class="signature">By
+                                {% for author in book.author.all %}
+                                    {% if forloop.first %}
+                                        {{ author }}
+                                    {% else %}
+                                        and {{ author }}
+                                    {% endif %}
+                                {% endfor %}
+                            </p>
+                        </div>                          
+                        <p class="blurb"> 
+                            {{ book.description|truncatewords:50 }}
+                        </p>
+                        <p class="added_date">Added {{ book.added_at }}</p>
+                    </div>                   
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

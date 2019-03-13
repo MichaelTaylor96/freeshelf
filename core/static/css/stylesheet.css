@@ -1,0 +1,39 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+body {
+    font-family: sans-serif;
+}
+
+.page_title {
+    border-bottom: rgb(0, 0, 119) solid 5px;
+    border-left: rgb(0, 0, 119) solid 5px;
+    background-color: rgb(203, 255, 255);
+    color: rgb(0, 0, 119);
+    padding-left: 2rem;
+    padding-top: 2.5rem;
+    margin-left: 2.5%;
+}
+
+.books {
+    display: flex;
+    flex-wrap: wrap;
+    margin: auto;
+    width: 95%;
+}
+
+.item {
+    display: flex;
+    flex: 1;
+    min-width: 25rem;
+    height: 25rem;
+    padding: 0 2rem;
+    align-items: flex-end;
+}
+
+.cover {
+    display: flex;
+    width: 10rem;
+}
