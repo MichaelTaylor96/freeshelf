@@ -6,38 +6,56 @@
 
 {% block content %}
     <div class="content">
-        <form method="GET" action="{% url 'Index' %}">
-            {{ sort.as_p }}
-            <button type="submit">Sort</button>
-        </form>
+        <div class="nav_container">
+            <form class="sort_filter" method="GET" action="{% url 'Index' %}">
+                {{ sort.as_p }}
+                <button type="submit">Sort</button>
+            </form>
+        </div>
         <div class="books">
             {% for book in books %}
                 <div class="item">
-                    {% if book.cover %}
-                        <img class="cover" src="{{ book.cover.url }}" alt="book cover">
-                    {% endif %}
-                    <div class="item_info">
-                        <div class="item_head">
-                            <h2 class="item_title">
-                                <a href="{{ book.url }}" target="blank">{{ book.title }}</a>
-                            </h2>
-                            <p class="signature">By
-                                {% for author in book.author.all %}
-                                    {% if forloop.first %}
-                                        {{ author }}
-                                    {% else %}
-                                        and {{ author }}
-                                    {% endif %}
-                                {% endfor %}
-                            </p>
-                        </div>                          
-                        <p class="blurb"> 
-                            {{ book.description|truncatewords:50 }}
+                    <div class="item_head">
+                        <h2 class="item_title">
+                            <a href="{{ book.url }}" target="blank">{{ book.title }}</a>
+                        </h2>
+                        <p class="signature">- By
+                            {% for author in book.author.all %}
+                                {% if forloop.first %}
+                                    {{ author }}
+                                {% else %}
+                                    and {{ author }}
+                                {% endif %}
+                            {% endfor %}
                         </p>
-                        <p class="added_date">Added {{ book.added_at }}</p>
-                    </div>                   
+                    </div>                          
+                    <p class="blurb"> 
+                        {{ book.description|truncatewords:50 }}
+                    </p>
+                    <p class="book_categories">
+                        Categories: {% for category in book.categories.all %}
+                            {% if forloop.first %} {{ category.name }}
+                            {% else %} | {{ category.name }}
+                            {% endif %}{% endfor %}
+                    </p>
+                    <p class="added_date">Added {{ book.added_at }}</p>                     
                 </div>
             {% endfor %}
         </div>
+        <div class="step_links">
+          {% if books.has_previous %}
+              <a href="?page=1">&laquo; first</a>
+              <a href="?page={{ books.previous_page_number }}">previous</a>
+          {% endif %}
+  
+          <span class="current">
+              Page {{ books.number }} of {{ books.paginator.num_pages }}.
+          </span>
+  
+          {% if books.has_next %}
+              <a href="?page={{ books.next_page_number }}">next</a>
+              <a href="?page={{ books.paginator.num_pages }}">last &raquo;</a>
+          {% endif %}
+      </div>
     </div>
 {% endblock %}

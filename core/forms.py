@@ -15,6 +15,8 @@ class BookSort(forms.Form):
             return None
 
         data = self.cleaned_data
+        if not data['sorter']:
+            data['sorter'] = '-added_at'
         books = Book.objects.order_by(data['sorter'])
         return books
 

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import Book
 from .forms import BookSort
+from django.core.paginator import Paginator
 
 # Create your views here.
 
@@ -10,6 +11,10 @@ def index(request):
         books = form.sort()
     else:
         form = BookSort()
-        books = books = Book.objects.all()
+        books = Book.objects.all()
+
+    paginator = Paginator(books, 16)
+    page = request.GET.get('page', 1)
+    books = paginator.get_page(page)
 
     return render(request, 'core/index.html', context={'books': books, 'sort': form})

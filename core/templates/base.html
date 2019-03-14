@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Freeshelf</title> 
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/stylesheet.css' %}">  
+    <link rel="stylesheet" href="{% static 'css/stylesheet.css' %}">
     
 </head>
 <body class="">
@@ -16,10 +16,13 @@
 
     </nav>
     <main class="main">
-        <h1 class="page_title">
-            {% block title %}
-            {% endblock %}
-        </h1>
+        <div class="header">
+            <h1 class="page_title">
+                {% block title %}
+                {% endblock %}
+            </h1>
+            <p>Login | Register</p>
+        </div>
         {% block content %}
         {% endblock %}
     </main>
