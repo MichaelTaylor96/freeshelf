@@ -44,8 +44,8 @@
         </div>
         <div class="step_links">
           {% if books.has_previous %}
-              <a href="?page=1">&laquo; first</a>
-              <a href="?page={{ books.previous_page_number }}">previous</a>
+              <a href="?sorter={{ sorter }}&page=1">&laquo; first</a>
+              <a href="?sorter={{ sorter }}&page={{ books.previous_page_number }}">previous</a>
           {% endif %}
   
           <span class="current">
@@ -53,8 +53,8 @@
           </span>
   
           {% if books.has_next %}
-              <a href="?page={{ books.next_page_number }}">next</a>
-              <a href="?page={{ books.paginator.num_pages }}">last &raquo;</a>
+              <a href="?sorter={{ sorter }}&page={{ books.next_page_number }}">next</a>
+              <a href="?sorter={{ sorter }}&page={{ books.paginator.num_pages }}">last &raquo;</a>
           {% endif %}
       </div>
     </div>

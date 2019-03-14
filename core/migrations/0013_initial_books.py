@@ -36,6 +36,7 @@ def load_initial_books(apps, schema_editor):
             book.categories.add(categories)
 
             book.save()
+
             
 class Migration(migrations.Migration):
 

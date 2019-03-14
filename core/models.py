@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.text import slugify
 
 # Create your models here.
 
@@ -30,3 +31,13 @@ class Book(models.Model):
 
     class Meta:
         ordering = ['-added_at']
+
+    def set_slug(self):
+        base_slug = slugify(self.title)
+        i = 0
+        while Book.objects.filter(slug=base_slug).count():
+            i += 1
+            base_slug += f"-{str(i)}"
+        self.slug = base_slug
+
+        self.save()

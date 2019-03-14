@@ -13,8 +13,9 @@ def index(request):
         form = BookSort()
         books = Book.objects.all()
 
+    sorter = request.GET.get('sorter', '-added_at')
     paginator = Paginator(books, 16)
     page = request.GET.get('page', 1)
     books = paginator.get_page(page)
 
-    return render(request, 'core/index.html', context={'books': books, 'sort': form})
+    return render(request, 'core/index.html', context={'books': books, 'sort': form, 'sorter': sorter})
