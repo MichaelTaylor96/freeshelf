@@ -5,56 +5,62 @@
 {% endblock %}
 
 {% block content %}
+    <h1 class="page_title">All Books</h1>
     <div class="content">
-        <div class="nav_container">
-            <form class="sort_filter" method="GET" action="{% url 'Index' %}">
-                {{ sort.as_p }}
-                <button type="submit">Sort</button>
-            </form>
-        </div>
+        <form class="index_forms" method="GET" action="{% url 'Index' %}">
+            <div class="search_form">
+                {{ search.as_p }}
+            </div>
+            <div class="filter_form">
+                {{ filtersort.as_p }}
+            </div>
+            <button type="submit">Search</button>
+        </form>
         <div class="books">
             {% for book in books %}
-                <div class="item">
-                    <div class="item_head">
-                        <h2 class="item_title">
-                            <a href="{{ book.url }}" target="blank">{{ book.title }}</a>
-                        </h2>
-                        <p class="signature">- By
-                            {% for author in book.author.all %}
-                                {% if forloop.first %}
-                                    {{ author }}
-                                {% else %}
-                                    and {{ author }}
-                                {% endif %}
-                            {% endfor %}
+                <div class="item_box">
+                    <div class="item">
+                        <div class="item_head">
+                            <h2 class="item_title">
+                                <a href="{{ book.url }}" target="blank">{{ book.title }}</a>
+                            </h2>
+                            <p class="signature">- By
+                                {% for author in book.author.all %}
+                                    {% if forloop.first %}
+                                        {{ author }}
+                                    {% else %}
+                                        and {{ author }}
+                                    {% endif %}
+                                {% endfor %}
+                            </p>
+                        </div>                          
+                        <p class="blurb"> 
+                            {{ book.description|truncatewords:50 }}
                         </p>
-                    </div>                          
-                    <p class="blurb"> 
-                        {{ book.description|truncatewords:50 }}
-                    </p>
-                    <p class="book_categories">
-                        Categories: {% for category in book.categories.all %}
-                            {% if forloop.first %} {{ category.name }}
-                            {% else %} | {{ category.name }}
-                            {% endif %}{% endfor %}
-                    </p>
-                    <p class="added_date">Added {{ book.added_at }}</p>                     
+                        <p class="book_categories">
+                            Categories: {% for category in book.categories.all %}
+                                {% if forloop.first %} {{ category.name }}
+                                {% else %} | {{ category.name }}
+                                {% endif %}{% endfor %}
+                        </p>
+                        <p class="added_date">Added {{ book.added_at }}</p>   
+                    </div>
                 </div>
             {% endfor %}
         </div>
         <div class="step_links">
           {% if books.has_previous %}
               <a href="?sorter={{ sorter }}&page=1">&laquo; first</a>
-              <a href="?sorter={{ sorter }}&page={{ books.previous_page_number }}">previous</a>
+              <a href="?sorter={{ sorter }}&page={{ books.previous_page_number }}"> previous </a>
           {% endif %}
   
           <span class="current">
-              Page {{ books.number }} of {{ books.paginator.num_pages }}.
+              Page {{ books.number }} of {{ books.paginator.num_pages }}
           </span>
   
           {% if books.has_next %}
-              <a href="?sorter={{ sorter }}&page={{ books.next_page_number }}">next</a>
-              <a href="?sorter={{ sorter }}&page={{ books.paginator.num_pages }}">last &raquo;</a>
+              <a href="?sorter={{ sorter }}&page={{ books.next_page_number }}"> next</a>
+              <a href="?sorter={{ sorter }}&page={{ books.paginator.num_pages }}"> last &raquo;</a>
           {% endif %}
       </div>
     </div>

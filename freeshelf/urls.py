@@ -18,11 +18,13 @@ from django.urls import path
 from django.urls import include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.generic.base import RedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('index/', include('core.urls')),
     path('accounts/', include('registration.backends.simple.urls')),
+    path('', RedirectView.as_view(url='/index/', permanent=True)),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

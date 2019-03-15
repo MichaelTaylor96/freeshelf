@@ -1,16 +1,19 @@
 from django.shortcuts import render
 from .models import Book
-from .forms import BookSort
+from .forms import FilterSort, Search
 from django.core.paginator import Paginator
 
 # Create your views here.
 
 def index(request):   
     if request.GET:
-        form = BookSort(request.GET)
-        books = form.sort()
+        filtersortform = FilterSort(request.GET)
+        searchform = Search(request.GET)
+        books = searchform.search(Book.objects.all())
+        books = filtersortform.filtersort(books)
     else:
-        form = BookSort()
+        filtersortform = FilterSort()
+        searchform = Search()
         books = Book.objects.all()
 
     sorter = request.GET.get('sorter', '-added_at')
@@ -18,4 +21,4 @@ def index(request):
     page = request.GET.get('page', 1)
     books = paginator.get_page(page)
 
-    return render(request, 'core/index.html', context={'books': books, 'sort': form, 'sorter': sorter})
+    return render(request, 'core/index.html', context={'books': books, 'filtersort': filtersortform, 'search': searchform, 'sorter': sorter})
