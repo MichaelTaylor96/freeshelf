@@ -22,7 +22,7 @@
                     <div class="item">
                         <div class="item_head">
                             <h2 class="item_title">
-                                <a href="{{ book.url }}" target="blank">{{ book.title }}</a>
+                                <a href="{% url 'book_detail' slug=book.slug %}">{{ book.title }}</a>
                             </h2>
                             <p class="signature">- By
                                 {% for author in book.author.all %}

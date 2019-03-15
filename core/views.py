@@ -22,3 +22,7 @@ def index(request):
     books = paginator.get_page(page)
 
     return render(request, 'core/index.html', context={'books': books, 'filtersort': filtersortform, 'search': searchform, 'sorter': sorter})
+
+def book_detail(request, slug):
+    book = Book.objects.get(slug=slug)
+    return render(request, 'core/book_detail.html', context={'book':book})

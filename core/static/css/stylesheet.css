@@ -104,3 +104,25 @@ button {
     width: 20rem;
     text-align: center;
 }
+
+.book_content {
+    margin: 2rem 8%;
+    background-color: white;
+    padding: 2rem 3rem;
+}
+
+.book_info {
+    display: flex;
+}
+
+.book_att {
+    padding: .3rem 1rem;
+}
+
+.att_label {
+    font-weight: bold;
+}
+
+.book_description {
+    padding: 1rem;
+}

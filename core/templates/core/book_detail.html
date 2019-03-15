@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <div class="title_text">Freeshelf<div>
+{% endblock %}
+
+{% block content %}
+    <h1 class="page_title">{{ book.title }}</h1>
+    <div class="book_content">
+        <div class="book_info">
+            {% if book.cover %}
+                <img src="{{ book.cover.url }}" alt="book cover">
+            {% endif %}
+            <div class="book_atts">
+                <div class="book_att">
+                    <span class="att_label">Author:</span>
+                    {% for author in book.author.all %}
+                        {% if forloop.first %}
+                            {{ author.name }}
+                        {% else %}
+                            and {{ author.name }}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="book_att">
+                    <span class="att_label">Categories: </span>
+                    {% for category in book.categories.all %}
+                        {% if forloop.first %}
+                            {{ category.name }}
+                        {% else %}
+                            | {{ category.name }}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="book_att">
+                    <p class="att_label">Description: </p>
+                    <p class="book_description">{{ book.description }}</p>
+                </div>
+                <div class="book_att">
+                    <span class="att_label">Link: </span>
+                    <a href="{{ book.url }}" target="blank">{{ book.url }}</a>
+                </div>
+                <div class="book_att">
+                    <span class="att_label">Added to Freeshelf on: </span>
+                    {{ book.added_at }}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+{% endblock %}

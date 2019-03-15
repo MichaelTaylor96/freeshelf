@@ -22,9 +22,9 @@ from django.views.generic.base import RedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('index/', include('core.urls')),
+    path('books/', include('core.urls')),
     path('accounts/', include('registration.backends.simple.urls')),
-    path('', RedirectView.as_view(url='/index/', permanent=True)),
+    path('', RedirectView.as_view(url='/books/', permanent=True)),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
