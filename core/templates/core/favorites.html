@@ -38,12 +38,16 @@
                             {{ book.description|truncatewords:50 }}
                         </p>
                         <p class="book_categories">
-                            Categories: {% for category in book.categories.all %}
+                            <span class="att_label">Categories: </span>{% for category in book.categories.all %}
                                 {% if forloop.first %} {{ category.name }}
                                 {% else %} | {{ category.name }}
                                 {% endif %}{% endfor %}
                         </p>
-                        <p class="added_date">Added {{ book.added_at }}</p>   
+                        <p class="added_date"><span class="att_label">Added </span>{{ book.added_at }}</p>
+                        <p class="favorited"><span class="att_label">Favorited: </span>{{ book.favorited_by.count }}{{ book.favorited_by.count|pluralize:" time, times" }}</p>
+                        {% if book.get_average_rating %}
+                            <p class="average_rating"><span class="att_label">Average rating: </span>{{ book.get_average_rating }} / 5</p>
+                        {% endif %} 
                     </div>
                 </div>
             {% endfor %}

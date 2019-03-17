@@ -47,7 +47,18 @@ class Book(models.Model):
 
     def get_absolute_url(self):
         return reverse("Book_detail", kwargs={"slug": self.slug})
-    
+
+    def get_average_rating(self):
+        total = 0
+        i = 0
+        for comment in self.comments.all():
+            if comment.rating:
+                total += comment.rating
+                i += 1
+        if total:
+            return total/i
+            
+        return 0
 
 class Comment(models.Model):
     ratings = (
@@ -58,7 +69,7 @@ class Comment(models.Model):
         (5, '5'),
     )
 
-    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE,  related_name='comments')
     content = models.TextField()
     user = models.ForeignKey(User, default='Anonymous', on_delete=models.SET_DEFAULT)
     posted_at = models.DateTimeField(auto_now_add=True)

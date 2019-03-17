@@ -108,6 +108,14 @@ button {
     padding-bottom: .5rem;
 }
 
+.added_date {
+    padding-bottom: .5rem;
+}
+
+.favorited {
+    padding-bottom: .5rem;
+}
+
 .step_links {
     margin: 2rem auto;
     width: 20rem;

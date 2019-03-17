@@ -7,7 +7,9 @@ class FilterSort(forms.Form):
         choices=[('-added_at', '-----'),
                 ('author__name', 'Author'),
                 ('added_at', 'Date'),
-                ('title', 'Title'),],
+                ('title', 'Title'),
+                ('favorites', 'Most Favorited'),
+                ('rating', 'Highest Rated'),],
         required=False)
 
     category = forms.ChoiceField(
@@ -26,7 +28,15 @@ class FilterSort(forms.Form):
 
         if not data['sorter']:
             data['sorter'] = '-added_at'
-        books = books.order_by(data['sorter'])
+
+        if data['sorter'] == 'favorites':
+            books = sorted(books, key=lambda book: book.favorited_by.count(), reverse=True)
+
+        elif data['sorter'] == 'rating':
+            books = sorted(books, key=Book.get_average_rating, reverse=True)
+        
+        else:
+            books = books.order_by(data['sorter'])
 
         return books
 
@@ -59,4 +69,3 @@ class CommentForm(forms.ModelForm):
         model = Comment
         exclude = ['user']
         widgets = {'book': forms.HiddenInput()}
-        

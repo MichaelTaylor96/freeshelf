@@ -44,6 +44,16 @@
                     <span class="att_label">Added to Freeshelf on: </span>
                     {{ book.added_at }}
                 </div>
+                <div class="book_att">
+                    <span class="att_label">Favorited: </span>
+                    {{ book.favorited_by.count }}{{ book.favorited_by.count|pluralize:" time, times" }}
+                </div>
+                {% if book.get_average_rating %}
+                    <div class="book_att">
+                        <span class="att_label">Average Rating: </span>
+                        {{ book.get_average_rating }} / 5
+                    </div>
+                {% endif %}
             </div>
             {% if request.user.is_authenticated %}
                 <form action="{% url 'Favorite' slug=book.slug %}" method="POST">
@@ -60,7 +70,7 @@
         </div>
         <h2 class="section_title">Comments</h2>
         <div class="comments">
-            {% for comment in book.comment_set.all %}
+            {% for comment in book.comments.all %}
                 <div class="comment">
                     <div class="comment_head">
                         <p class="comment_author">{{ comment.user.username }}</p>
@@ -76,6 +86,7 @@
                     </div>
                 </div>
             {% endfor %}
+        </div>
         {% if request.user.is_authenticated %}
         <form method="POST" action="{% url 'Book_detail' slug=book.slug %}">
             {% csrf_token %}
