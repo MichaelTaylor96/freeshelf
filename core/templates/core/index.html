@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-    <h1 class="page_title">All Books</h1>
+    <h1 class="page_title">Index</h1>
     <div class="content">
         <form class="index_forms" method="GET" action="{% url 'Index' %}">
             <div class="search_form">
@@ -22,7 +22,7 @@
                     <div class="item">
                         <div class="item_head">
                             <h2 class="item_title">
-                                <a href="{% url 'book_detail' slug=book.slug %}">{{ book.title }}</a>
+                                <a href="{% url 'Book_detail' slug=book.slug %}">{{ book.title }}</a>
                             </h2>
                             <p class="signature">- By
                                 {% for author in book.author.all %}

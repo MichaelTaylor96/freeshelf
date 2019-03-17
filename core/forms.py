@@ -1,5 +1,5 @@
 from django import forms
-from .models import Book, Author, Category
+from .models import Book, Author, Category, Comment
 
 class FilterSort(forms.Form):
     sorter = forms.ChoiceField(
@@ -22,7 +22,7 @@ class FilterSort(forms.Form):
         data = self.cleaned_data
 
         if data['category'] and data['category'] != 'none':
-            books = books.filter(categories__name__icontains=data['category'])
+            books = books.filter(categories__name__iexact=data['category'])
 
         if not data['sorter']:
             data['sorter'] = '-added_at'
@@ -53,3 +53,10 @@ class Search(forms.Form):
             books = books.filter(**{f"{data['search_by']}__icontains":data['search_for']})
 
         return books
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        exclude = ['user']
+        widgets = {'book': forms.HiddenInput()}
+        

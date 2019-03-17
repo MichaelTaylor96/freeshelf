@@ -8,6 +8,15 @@ body {
     background-color: rgb(235, 245, 243);
 }
 
+.nav_option {
+    text-decoration: none;
+    color: white;
+}
+
+.nav_option:hover {
+    text-decoration: underline;
+}
+
 .header {
     display: flex;
     justify-content: space-between;
@@ -124,5 +133,40 @@ button {
 }
 
 .book_description {
+    padding: 1rem;
+}
+
+.section_title {
+    margin: 2%;
+    border-bottom: 2px solid rgb(105, 105, 105);
+}
+
+.comments {
+    margin: 0 5%;
+    padding: 1rem;
+    background-color: rgb(235, 245, 243);
+}
+
+.comment {
+    margin-bottom: 1rem;
+    background-color: white;
+    padding: 1rem;
+}
+
+.comment_head {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: .25rem;
+}
+
+.comment_author {
+    font-weight: bold;
+}
+
+.posted_at {
+    font-style: italic;
+}
+
+.comment_content {
     padding: 1rem;
 }

@@ -20,8 +20,14 @@
             <h1 class="site_banner">
                 {% block title %}
                 {% endblock %}
-            </h1>
-            <p>Login | Register</p>
+            </h1>           
+            <p>{% if request.user.is_authenticated %}
+                {{ user.username }} | 
+                <a class="nav_option" href="{% url 'auth_logout' %}">Logout</a> |
+                <a class="nav_option" href="{% url 'Index' %}">Home</a>
+            {% else %}
+                <a class="nav_option" href="{% url 'auth_login' %}">Login | Register</a>
+            {% endif %}</p>
         </div>
         {% block content %}
         {% endblock %}

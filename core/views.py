@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from .models import Book
-from .forms import FilterSort, Search
+from .forms import FilterSort, Search, CommentForm
 from django.core.paginator import Paginator
+from django.contrib import messages
 
 # Create your views here.
 
@@ -25,4 +26,19 @@ def index(request):
 
 def book_detail(request, slug):
     book = Book.objects.get(slug=slug)
-    return render(request, 'core/book_detail.html', context={'book':book})
+
+    if request.method == "POST" and request.user.is_authenticated:
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.user = request.user
+            comment.save()
+            messages.success(
+                request,
+                f"Thank you for your input!"
+            )
+            return redirect(to='Book_detail', slug=book.slug)
+
+    form = CommentForm(initial={"book": book})
+    
+    return render(request, 'core/book_detail.html', context={'book':book, 'form':form})
