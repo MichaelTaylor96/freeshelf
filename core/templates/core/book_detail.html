@@ -45,6 +45,18 @@
                     {{ book.added_at }}
                 </div>
             </div>
+            {% if request.user.is_authenticated %}
+                <form action="{% url 'Favorite' slug=book.slug %}" method="POST">
+                    {% csrf_token %}
+                    <button class="fav_button" type="submit">
+                        {% if request.user in book.favorited_by.all %}
+                        Unfavorite
+                        {% else %}
+                        Favorite
+                        {% endif %}
+                    </button>
+                </form>
+            {% endif %}
         </div>
         <h2 class="section_title">Comments</h2>
         <div class="comments">

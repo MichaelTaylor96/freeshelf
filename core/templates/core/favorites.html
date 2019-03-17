@@ -5,9 +5,9 @@
 {% endblock %}
 
 {% block content %}
-    <h1 class="page_title">Index</h1>
+    <h1 class="page_title">Favorites</h1>
     <div class="content">
-        <form class="index_forms" method="GET" action="{% url 'Index' %}">
+        <form class="index_forms" method="GET" action="{% url 'Favorites' username=user.username%}">
             <div class="search_form">
                 {{ search.as_p }}
             </div>

@@ -124,6 +124,17 @@ button {
     display: flex;
 }
 
+.fav_button {
+    width: 85%;
+    height: 2rem;
+    background-color: rgb(235, 245, 243); 
+}
+
+.fav_button:hover {
+    border: 2px solid blue;
+    border-radius: 5px;
+}
+
 .book_att {
     padding: .3rem 1rem;
 }

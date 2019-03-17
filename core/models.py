@@ -1,12 +1,9 @@
 from django.db import models
 from django.utils.text import slugify
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 # Create your models here.
-
-class MyUser(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-
 
 class Author(models.Model):
     name = models.CharField(max_length=200, default="Unkown Author")
@@ -30,6 +27,7 @@ class Book(models.Model):
     slug = models.SlugField()
     cover = models.ImageField(null=True, blank=True, upload_to='uploads/images/')
     categories = models.ManyToManyField(to=Category, related_name='books')
+    favorited_by = models.ManyToManyField(to=User, related_name='favorited', through='Favorite')
 
     def __str__(self):
         return self.title
@@ -47,6 +45,10 @@ class Book(models.Model):
 
         self.save()
 
+    def get_absolute_url(self):
+        return reverse("Book_detail", kwargs={"slug": self.slug})
+    
+
 class Comment(models.Model):
     ratings = (
         (1, '1'),
@@ -62,7 +64,15 @@ class Comment(models.Model):
     posted_at = models.DateTimeField(auto_now_add=True)
     rating = models.PositiveIntegerField(choices=ratings, null=True, blank=True)
 
+    class Meta:
+        ordering = ['-posted_at']
+
     def get_rating(self):
         if self.rating:
-            return f"{'⭐' * self.rating}{'- ' * (5-self.rating)}"
+            return f"{'⭐' * self.rating}{' - ' * (5-self.rating)}"
         return None
+
+class Favorite(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    favorited_at = models.DateTimeField(auto_now_add=True)
